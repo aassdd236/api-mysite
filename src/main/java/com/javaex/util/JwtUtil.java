@@ -28,14 +28,14 @@ public class JwtUtil {
     }
 
 	// 토큰 생성
-	private static String createToken(String tokenSuject) {
+    public static String createToken(String tokenSuject) {
 		return JWT.create().withSubject(""+tokenSuject) // 토큰의 주체, 여기서는 사용자 no
 				.withExpiresAt(new Date(System.currentTimeMillis() + EXPIRE_TIME)) // 만료 시간 설정
 				.sign(Algorithm.HMAC512(SECRET_KEY)); // 서명 알고리즘과 비밀키를 사용하여 서명
 	}
 	
 	// 토큰 응답해더 등록
-	private static void addResponseHeaderToken(HttpServletResponse response, String token) {
+	public static void addResponseHeaderToken(HttpServletResponse response, String token) {
 		response.addHeader("Authorization", "Bearer " + token);
 	}
 
@@ -74,7 +74,7 @@ public class JwtUtil {
     }
 	
     // 토큰이 유효한지 검사
-	private static boolean checkToken(String token) {
+	public static boolean checkToken(String token) {
  		
  		try {
  			JWTVerifier verifier = JWT.require(Algorithm.HMAC512(SECRET_KEY)).build();
@@ -90,7 +90,7 @@ public class JwtUtil {
  	
  
 	//토큰에서 주체 꺼내기
-	private static String getSubjectFromToken(String token) {
+	public static String getSubjectFromToken(String token) {
 		
 		DecodedJWT decodedJWT = JWT.decode(token);
 		return decodedJWT.getSubject();

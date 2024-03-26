@@ -11,16 +11,31 @@ public class UserDao {
 
 	@Autowired
 	private SqlSession sqlSession;
-	
+
+	// 로그인
 	public UserVo userSelectByIdPw(UserVo userVo) {
 		System.out.println("UserDao.userSelectByIdPw()");
-		
+
 		UserVo authUser = sqlSession.selectOne("user.selectByIdPw", userVo);
-		
+
 		System.out.println(userVo);
 		System.out.println(authUser);
 		return authUser;
 	}
-	
-	
+
+	// 조회no(회원정보수정 폼)
+	public UserVo userSelectOneByNo(int no) {
+		System.out.println("UserDao.userSelectOneByNo()");
+
+		UserVo userVo = sqlSession.selectOne("user.selectOneByNo", no);
+		return userVo;
+	}
+
+	// 수정(회원정보수정)
+	public int userUpdate(UserVo userVo) {
+		System.out.println("UserDao.userUpdate()");
+
+		int count = sqlSession.update("user.update", userVo);
+		return count;
+	}
 }
